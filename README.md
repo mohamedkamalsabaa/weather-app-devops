@@ -506,12 +506,6 @@ docker-compose logs -f                 # Follow logs
 docker stats                          # Resource usage
 ```
 
-### **📅 Release Schedule**
-- **Major releases**: Every 6 months (new features)
-- **Minor releases**: Monthly (improvements, updates)
-- **Patch releases**: As needed (bug fixes, security)
-- **Dependencies**: Updated quarterly for security
-
 ## 📄 **License & Legal**
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
@@ -523,15 +517,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **[Ansible](https://ansible.com/)**: Automation platform
 - **[Matplotlib](https://matplotlib.org/)**: Plotting library
 
-### **🙏 Special Thanks**
-- **Flask Community**: For the excellent web framework
-- **Docker Team**: For containerization technology
-- **OpenWeatherMap**: For providing free weather data API
-- **Open Source Contributors**: For the dependencies and tools used
-
 ---
-
-## 🎯 **Quick Reference**
 
 ### **🚀 Most Common Commands**
 ```bash

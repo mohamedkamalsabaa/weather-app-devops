@@ -1,6 +1,6 @@
 # 🌤️ Weather App DevOps
 
-A **production-ready** Python Flask web application for collecting and visualizing weather data with complete DevOps automation. This project demonstrates enterprise-level practices with Docker containerization, Ansible automation, and CI/CD pipelines.
+A **production-ready** Python Flask web application for collecting and visualising weather data with complete DevOps automation. This project demonstrates enterprise-level practices with Docker containerization, Ansible automation, and CI/CD pipelines.
 
 ## 📊 **Project Overview & Status**
 
@@ -264,7 +264,7 @@ vagrant status      # Check VM status
 ### **🔐 Security Features**
 - **Environment Variables**: All sensitive data externalized
 - **Input Validation**: Protection against XSS and injection attacks
-- **Non-root Containers**: Docker containers run as unprivileged user
+- **Non-root Containers**: Docker containers run as an unprivileged user
 - **API Timeouts**: Protection against hanging requests
 - **Updated Dependencies**: Regular security updates applied
 - **Health Checks**: Automatic container health monitoring
@@ -491,14 +491,6 @@ pytest app/test_app.py::test_home_page -v
 - ✅ **CI/CD Automated** (GitHub Actions + Jenkins)
 - ✅ **Documentation Complete** (setup to deployment)
 
-## 📞 **Support & Maintenance**
-
-### **🆘 Getting Help**
-- **Issues**: [GitHub Issues](https://github.com/mohamedkamalsabaa/weather-app-devops/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/mohamedkamalsabaa/weather-app-devops/discussions)
-- **Documentation**: This README + code comments
-- **Examples**: See `docker-compose.yml` and `.env.example`
-
 ### **🔧 Maintenance Commands**
 ```bash
 # Update dependencies
@@ -556,16 +548,3 @@ make test
 # Deployment
 ansible-playbook -i vagrant_inventory.ini deploy-docker.yml
 ```
-
-### **📞 Need Help?**
-1. **Check troubleshooting section** above
-2. **Review logs**: `docker-compose logs`
-3. **Test configuration**: Check `.env` file
-4. **Verify API key**: Test at OpenWeatherMap
-5. **Create issue**: If problem persists
-
----
-
-**🌟 Star this repository if you find it useful!**
-
-**Made with ❤️ for learning DevOps and modern web development practices.**

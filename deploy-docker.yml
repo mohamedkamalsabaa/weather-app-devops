@@ -1,0 +1,101 @@
+---
+- name: Deploy Docker Container on Vagrant Machines
+  hosts: all
+  become: yes
+  vars:
+    docker_image: "mohamedkamalsabaa/weather-app-devops:latest"
+    container_name: "weather_app"
+    app_port: "5000"
+    
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - gnupg
+          - lsb-release
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: "deb [arch={{ ansible_architecture }}] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Install Docker CE
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add vagrant user to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+    - name: Stop existing container (if running)
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Remove old Docker image (if exists)
+      docker_image:
+        name: "{{ docker_image }}"
+        state: absent
+        force_absent: yes
+      ignore_errors: yes
+
+    - name: Pull latest Docker image from Docker Hub
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: yes
+
+    - name: Run the Docker container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "{{ app_port }}:{{ app_port }}"
+        env:
+          FLASK_DEBUG: "false"
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:{{ app_port }}/"]
+          interval: "30s"
+          timeout: "10s"
+          retries: 3
+          start_period: "30s"
+
+    - name: Wait for application to be ready
+      uri:
+        url: "http://{{ ansible_default_ipv4.address }}:{{ app_port }}"
+        method: GET
+        status_code: 200
+      retries: 10
+      delay: 5
